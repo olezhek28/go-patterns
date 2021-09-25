@@ -1,7 +1,6 @@
 package singleton
 
 import (
-	"fmt"
 	"sync"
 )
 
@@ -23,7 +22,6 @@ type single struct {
 func GetInstance() Singleton {
 	once.Do(
 		func() {
-			fmt.Println("Create...")
 			instance = new(single)
 		})
 
