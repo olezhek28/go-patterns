@@ -6,26 +6,27 @@ import (
 )
 
 var (
-	once           sync.Once
-	singleInstance *single
+	once     sync.Once
+	instance *single = nil
 )
+
+type Singleton interface {
+	SetName(name string)
+	GetName() string
+}
 
 type single struct {
 	name string
 }
 
-func GetInstance() *single {
-	if singleInstance == nil {
-		once.Do(
-			func() {
-				fmt.Println("Create...")
-				singleInstance = &single{}
-			})
-	} else {
-		fmt.Println("Already")
-	}
+func GetInstance() Singleton {
+	once.Do(
+		func() {
+			fmt.Println("Create...")
+			instance = new(single)
+		})
 
-	return singleInstance
+	return instance
 }
 
 func (s *single) SetName(name string) {
