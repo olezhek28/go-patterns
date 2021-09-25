@@ -17,6 +17,7 @@ type Singleton interface {
 
 type single struct {
 	name string
+	sync.RWMutex
 }
 
 func GetInstance() Singleton {
@@ -30,9 +31,15 @@ func GetInstance() Singleton {
 }
 
 func (s *single) SetName(name string) {
+	s.Lock()
+	defer s.Unlock()
+
 	s.name = name
 }
 
 func (s *single) GetName() string {
+	s.RLock()
+	defer s.RUnlock()
+
 	return s.name
 }
