@@ -8,6 +8,7 @@ var (
 )
 
 type Database interface {
+	GetDBName() string
 	SetTableName(name string)
 	GetTableName() string
 }
@@ -27,6 +28,13 @@ func GetConnect(name string) Database {
 	})
 
 	return instance
+}
+
+func (d *database) GetDBName() string {
+	d.RLock()
+	defer d.RUnlock()
+
+	return d.name
 }
 
 func (d *database) SetTableName(name string) {
