@@ -31,6 +31,7 @@ func TestGetInstance(t *testing.T) {
 		require.Equal(t, secondName, s.GetName())
 	})
 
+	// check 'go test -race'
 	t.Run("async case", func(t *testing.T) {
 		s1 := GetInstance()
 		s2 := GetInstance()
